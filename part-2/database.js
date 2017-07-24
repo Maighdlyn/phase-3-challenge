@@ -38,18 +38,29 @@ const itemsInSection = (parameter) => {
     })
   }
 
-const checkNodeInput = (query, parameter) => {
+const cheapItems = () => {
+  return db.any('SELECT * FROM items WHERE price < 10.00 ORDER BY price')
+    .then( (data) => {
+      const header = 'ID   Name         Price \n------------------------------\n'
+      const rows = data
+        .map(item => formatSpaces(item.id.toString(), 2) + formatSpaces(item.name, 10) + ' ' + formatSpaces(item.price, 5))
+        .join('\n')
+      return header + rows
+    })
+}
+
+const checkNodeQuery = (query, parameter) => {
   switch(query) {
     case 'allItems':
-      return queries.allItems()
+      return allItems()
       break
 
     case 'itemsInSection':
-      return queries.itemsInSection(parameter)
+      return itemsInSection(parameter)
       break
 
     case 'cheapItems' :
-      console.log("Items under $10")
+      return cheapItems()
       break
 
     case 'countItemsInSection' :
@@ -73,7 +84,7 @@ const checkNodeInput = (query, parameter) => {
 if(require.main === module) {
   const nodeQuery = process.argv[2]
   const nodeParameter = process.argv[3]
-  switchCheck(nodeQuery, nodeParameter)
+  checkNodeQuery(nodeQuery, nodeParameter)
     .then( (data) => {
       console.log(data)
       pgp.end()
@@ -84,5 +95,6 @@ if(require.main === module) {
 module.exports = {
   db,
   allItems,
-  itemsInSection
+  itemsInSection,
+  cheapItems
 }
