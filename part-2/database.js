@@ -27,8 +27,8 @@ const allItems = () => {
       })
   }
 
-const itemsInSection = (parameter) => {
-    return db.any('SELECT * FROM items WHERE section = $1', [parameter])
+const itemsInSection = (section) => {
+    return db.any('SELECT * FROM items WHERE section = $1', [section])
     .then( (data) => {
       const header = 'ID   Name \n------------------\n'
       const rows = data
@@ -49,6 +49,13 @@ const cheapItems = () => {
     })
 }
 
+const countItemsInSection = (section) => {
+    return db.any('SELECT COUNT(*) FROM items WHERE section = $1', [section])
+    .then( (data) => {
+      return "There are " + data[0].count + " items in the " + section + " section."
+    })
+}
+
 const checkNodeQuery = (query, parameter) => {
   switch(query) {
     case 'allItems':
@@ -64,7 +71,7 @@ const checkNodeQuery = (query, parameter) => {
       break
 
     case 'countItemsInSection' :
-      console.log("count stuff in " + parameter)
+      return countItemsInSection(parameter)
       break
 
     case 'mostRecentOrders' :
@@ -96,5 +103,6 @@ module.exports = {
   db,
   allItems,
   itemsInSection,
-  cheapItems
+  cheapItems,
+  countItemsInSection
 }
