@@ -6,7 +6,13 @@ app.get('/', (req, res) => {
 })
 
 app.get('/supported-operations', (req, res) => {
-  res.send('supported-operations')
+  const supportedOperations = {
+    "/": "division",
+    "+": "addition",
+    "-": "subtraction",
+    "*": "multiplication"
+  }
+  res.json(supportedOperations)
 })
 
 app.get('/square', (req, res) => {
