@@ -5,7 +5,7 @@ app.get('/', (req, res) => {
   res.send('hello')
 })
 
-app.get('/supported-operations', (req, res) => {
+app.get('/api/supported-operations', (req, res) => {
   const supportedOperations = {
     "/": "division",
     "+": "addition",
@@ -15,13 +15,13 @@ app.get('/supported-operations', (req, res) => {
   res.json(supportedOperations)
 })
 
-app.get('/square?:number', (req, res) => {
-  const number = parseInt(req.query.number)
+app.get('/api/square?:number', (req, res) => {
+  const number = Number(req.query.number)
   const response = {"result": Math.pow(number, 2)}
   res.json(response)
 })
 
-app.get('/compute', (req, res) => {
+app.get('/api/compute', (req, res) => {
   res.send('compute')
 })
 
