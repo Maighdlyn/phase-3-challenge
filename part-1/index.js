@@ -15,8 +15,10 @@ app.get('/supported-operations', (req, res) => {
   res.json(supportedOperations)
 })
 
-app.get('/square', (req, res) => {
-  res.send('square')
+app.get('/square?:number', (req, res) => {
+  const number = parseInt(req.query.number)
+  const response = {"result": Math.pow(number, 2)}
+  res.json(response)
 })
 
 app.get('/compute', (req, res) => {
