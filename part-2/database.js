@@ -4,14 +4,30 @@ const db = pgp({
   database: 'grocery_store'
 })
 
-// const checkTest = () => {
-//   return 2
-// }
+const formatSpaces = (string, maxLength) => {
+  if (string.length > maxLength) {
+    return string.slice(0,10) + "..."
+  }
+  else {
+    while (string.length < maxLength + 3){
+      string += ' '
+    }
+    return string
+  }
+}
 
 const queries = (query, parameter) => {
   switch(query) {
     case 'allItems':
-      console.log("All the items")
+      return db.any('SELECT * FROM items')
+        .then( (data) => {
+          // console.log(data)
+          const header = 'ID   Name          Price    Section\n-----------------------------------------\n'
+          const rows = data
+            .map(item => formatSpaces(item.id.toString(), 2) + formatSpaces(item.name, 10) + ' ' + formatSpaces(item.price, 5) + ' ' + item.section)
+            .join('\n')
+          return header + rows
+        })
       break;
     case 'itemsInSection':
       console.log("These items are in " + parameter)
@@ -33,11 +49,19 @@ const queries = (query, parameter) => {
       break;
   }
 }
-const nodeQuery = process.argv[2]
-const nodeParameter = process.argv[3]
-queries(nodeQuery, nodeParameter)
+
+if(require.main === module) {
+  const nodeQuery = process.argv[2]
+  const nodeParameter = process.argv[3]
+  queries(nodeQuery, nodeParameter)
+    .then( (data) => {
+      console.log(data)
+      pgp.end()
+    })
+}
 
 module.exports = {
   // checkTest,
+  queries,
   db
 }

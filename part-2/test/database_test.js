@@ -1,13 +1,14 @@
 const expect = require('chai').expect
-const {checkTest, db} = require('../database.js')
+const {checkTest, queries, db} = require('../database.js')
 const pgPromise = require('pg-promise')
 const pgp = pgPromise()
 
-// describe("Checking that this test is connecting properly", () => {
-//   it("2+2=4", () => {
-//     expect(checkTest() + 2).to.eql(4)
-//   })
-//   it('2+2=3 should fail', () => {
-//     expect(checkTest() +2).to.eql(3)
-//   })
-// })
+describe("Phase 3 Assessment, Part 2", () => {
+  it("'AllItems' should display a list of items", () => {
+    return queries('allItems')
+      .then( (data) => {
+        pgp.end()
+        expect(data.slice(0,188)).to.eql('ID   Name          Price    Section\n-----------------------------------------\n1    Aluminum F... 8.84     miscellaneous\n2    Apples        10.81    produce\n3    Bacon         9.01     meat')
+      })
+  })
+})
