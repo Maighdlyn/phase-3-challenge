@@ -139,10 +139,6 @@ body {
   right: 1em;
 }
 
-.cart-row{
-  justify-content: space-around;
-}
-
 .invisible{
   display: none;
 }

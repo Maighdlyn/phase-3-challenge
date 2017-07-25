@@ -6,19 +6,22 @@
   const addToCart = () => {
     const parentDiv = event.target.parentNode.innerText
     const itemArray = parentDiv.split('\n').slice(0,2)
+    
+    priceTotal += Number(itemArray[1].slice(1))
+    cartModal(itemArray)
 
     cartCounter++
     document.querySelector('#cart-button').innerHTML = "Cart (" + cartCounter + ")"
-
-    priceTotal += Number(itemArray[1].slice(1))
-    console.log('total:', priceTotal)
-
-    cartModal(itemArray)
   }
 
   cartModal = (itemArray) => {
-    // this is where DOM nodes are gonna be made for the items list
-    console.log(itemArray)
+    document.querySelector('.items-list').appendChild(document.createElement('div')).className = "cart-row flex-row-between"
+    const cartRows = document.querySelectorAll('.cart-row')
+    const lastRow = cartRows[cartRows.length-1]
+    lastRow.appendChild(document.createElement('p')).innerText = itemArray[0]
+    lastRow.appendChild(document.createElement('p')).innerText = itemArray[1]
+
+    document.querySelector('.cart-total').innerText = 'Total: $' + priceTotal.toFixed(2)
   }
 
   showCart = () => {
@@ -29,6 +32,17 @@
     document.querySelector('.grey-out').classList.add('invisible')
   }
 
+  clearCart = () => {
+    const itemsList = document.querySelector('.items-list')
+    while (itemsList.firstChild) {
+      itemsList.removeChild(itemsList.firstChild)
+    }
+    document.querySelector('.cart-total').innerText = 'Total: $0'
+    document.querySelector('#cart-button').innerHTML = "Cart (0)"
+    cartCounter = 0
+    priceTotal = 0
+}
+
   // All event Listeners:
 
   for(i=0; i<addToCartButtons.length; i++){
@@ -36,5 +50,5 @@
   }
   document.querySelector('#cart-button').addEventListener('click', showCart)
   document.querySelector('.close-cart').addEventListener('click', hideCart)
-
+  document.querySelector('.clear-cart').addEventListener('click', clearCart)
 })()
