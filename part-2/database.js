@@ -61,27 +61,21 @@ const checkNodeQuery = (query, parameter) => {
     case 'allItems':
       return allItems()
       break
-
     case 'itemsInSection':
       return itemsInSection(parameter)
       break
-
     case 'cheapItems' :
       return cheapItems()
       break
-
     case 'countItemsInSection' :
       return countItemsInSection(parameter)
       break
-
     case 'mostRecentOrders' :
       console.log("Recent orders")
       break
-
     case 'lastShopperName' :
       console.log("last shopper")
       break
-
     case 'orderTotal' :
       console.log("total for id " + parameter)
       break
@@ -100,7 +94,6 @@ if(require.main === module) {
 
 
 module.exports = {
-  db,
   allItems,
   itemsInSection,
   cheapItems,
