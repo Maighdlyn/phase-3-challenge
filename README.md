@@ -115,8 +115,8 @@ Then, use [pg-promise](https://www.npmjs.com/package/pg-promise) and [Mocha](htt
 
 User Stories: Ensure that your schema design can satisfy the following scenarios
 
-- [ ] __10__: As a shopper I can fetch all my orders
-- [ ] __10__: As a shopper I can have multiple items in an order
+- [X] __10__: As a shopper I can fetch all my orders
+- [X] __10__: As a shopper I can have multiple items in an order
 
 Implement these functions in `database.js` using [pg-promise](https://www.npmjs.com/package/pg-promise) to make the following queries:
 
