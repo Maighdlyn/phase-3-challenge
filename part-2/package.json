@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha || true",
-    "schema": "psql < 'schema.sql'"
+    "schema": "psql < 'schema.sql'",
+    "SQL": "psql < 'load-data.sql'"
   },
   "author": "Emma Brown",
   "license": "MIT",
