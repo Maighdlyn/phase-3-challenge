@@ -113,3 +113,36 @@ body {
 .item-price {
   flex: 0;
 }
+
+.grey-out{
+  position: fixed;
+  width:100%;
+  height:100%;
+  z-index:1;
+  background-color: rgba(221, 221, 221, 0.88)
+}
+
+.modal{
+  position: fixed;
+  width: 50%;
+  min-height: 50%;
+  left: 25%;
+  top: 25%;
+  z-index: 2;
+  background-color: white;
+  border: 3px outset white;
+}
+
+.close-cart{
+  position:absolute;
+  top: 1em;
+  right: 1em;
+}
+
+.cart-row{
+  justify-content: space-around;
+}
+
+.invisible{
+  display: none;
+}
