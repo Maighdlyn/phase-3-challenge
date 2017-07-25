@@ -12,19 +12,19 @@ CREATE TABLE items(
 
 CREATE TABLE shoppers(
   id SERIAL PRIMARY KEY,
-  name TEXT,
-  email TEXT NOT NULL UNIQUE
+  name VARCHAR(150),
+  email VARCHAR(150) NOT NULL UNIQUE
 );
 
-CREATE TABLE orders(
-  id SERIAL PRIMARY KEY,
-  shopper_id TEXT NOT NULL,
-  order_date date DEFAULT CURRENT_DATE
-);
-
-CREATE TABLE items_ordered(
-  id SERIAL PRIMARY KEY,
-  order_number INT,
-  item_id INT,
-  quantity INT
-)
+-- CREATE TABLE orders(
+--   id SERIAL PRIMARY KEY,
+--   shopper_id TEXT NOT NULL,
+--   order_date date DEFAULT CURRENT_DATE
+-- );
+--
+-- CREATE TABLE items_ordered(
+--   id SERIAL PRIMARY KEY,
+--   order_number INT,
+--   item_id INT,
+--   quantity INT
+-- )
