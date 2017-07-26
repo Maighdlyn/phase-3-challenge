@@ -6,7 +6,7 @@
   const addToCart = () => {
     const parentDiv = event.target.parentNode.innerText
     const itemArray = parentDiv.split('\n').slice(0,2)
-    
+
     priceTotal += Number(itemArray[1].slice(1))
     cartModal(itemArray)
 
@@ -15,13 +15,13 @@
   }
 
   cartModal = (itemArray) => {
-    document.querySelector('.items-list').appendChild(document.createElement('div')).className = "cart-row flex-row-between"
+    document.querySelector('.items-list').appendChild(document.createElement('div')).className = "cart-row flex flex-row-around"
     const cartRows = document.querySelectorAll('.cart-row')
     const lastRow = cartRows[cartRows.length-1]
     lastRow.appendChild(document.createElement('p')).innerText = itemArray[0]
     lastRow.appendChild(document.createElement('p')).innerText = itemArray[1]
 
-    document.querySelector('.cart-total').innerText = 'Total: $' + priceTotal.toFixed(2)
+    document.querySelector('.cart-total').innerText = '$' + priceTotal.toFixed(2)
   }
 
   showCart = () => {
