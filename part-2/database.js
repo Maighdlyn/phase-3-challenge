@@ -17,18 +17,18 @@ const formatSpaces = (string, maxLength) => {
 }
 
 const allItems = () => {
-    return db.any('SELECT * FROM items')
-      .then( (data) => {
-        const header = 'ID   Name          Price    Section\n-----------------------------------------\n'
-        const rows = data
-          .map(item => formatSpaces(item.id.toString(), 2) + formatSpaces(item.name, 10) + ' ' + formatSpaces(item.price, 5) + ' ' + item.section)
-          .join('\n')
-        return header + rows
-      })
-  }
+  return db.any('SELECT * FROM items')
+    .then( (data) => {
+      const header = 'ID   Name          Price    Section\n-----------------------------------------\n'
+      const rows = data
+        .map(item => formatSpaces(item.id.toString(), 2) + formatSpaces(item.name, 10) + ' ' + formatSpaces(item.price, 5) + ' ' + item.section)
+        .join('\n')
+      return header + rows
+    })
+}
 
 const itemsInSection = (section) => {
-    return db.any('SELECT id, name FROM items WHERE section = $1', [section])
+  return db.any('SELECT id, name FROM items WHERE section = $1', [section])
     .then( (data) => {
       const header = 'ID   Name \n------------------\n'
       const rows = data
@@ -36,7 +36,7 @@ const itemsInSection = (section) => {
         .join('\n')
       return header + rows
     })
-  }
+}
 
 const cheapItems = () => {
   return db.any('SELECT id, name, price FROM items WHERE price < 10.00 ORDER BY price')
@@ -50,7 +50,7 @@ const cheapItems = () => {
 }
 
 const countItemsInSection = (section) => {
-    return db.any('SELECT COUNT(*) FROM items WHERE section = $1', [section])
+  return db.any('SELECT COUNT(*) FROM items WHERE section = $1', [section])
     .then( (data) => {
       return "There are " + data[0].count + " items in the " + section + " section."
     })

@@ -119,6 +119,7 @@ body {
   flex: 0;
 }
 
+/*Modal*/
 .grey-out{
   position: absolute;
   width:100%;
