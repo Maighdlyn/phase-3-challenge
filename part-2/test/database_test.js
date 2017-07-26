@@ -4,12 +4,6 @@ const pgPromise = require('pg-promise')
 const pgp = pgPromise()
 
 describe("Phase 3 Assessment, Part 2", () => {
-  it('A call to countItemsInSection("packaged") returns 5', () => {
-    return countItemsInSection("packaged")
-      .then( (data) => {
-        expect(data).to.eql('There are 5 items in the packaged section.')
-      })
-  })
 
   it(' A call to itemsInSection("bulk") returns the items "Flour", "Pasta", and "Rice"', () => {
     return itemsInSection('bulk')
@@ -23,6 +17,13 @@ describe("Phase 3 Assessment, Part 2", () => {
       .then( (data) => {
         expect(data.slice(0,79)).to.eql('ID   Name         Price \n------------------------------\n15   Fish          0.49')
         expect(data.slice(728, 751)).to.eql('22   Honey         9.31')
+      })
+  })
+
+  it('A call to countItemsInSection("packaged") returns 5', () => {
+    return countItemsInSection("packaged")
+      .then( (data) => {
+        expect(data).to.eql('There are 5 items in the packaged section.')
       })
   })
 

@@ -28,7 +28,7 @@ const allItems = () => {
   }
 
 const itemsInSection = (section) => {
-    return db.any('SELECT * FROM items WHERE section = $1', [section])
+    return db.any('SELECT id, name FROM items WHERE section = $1', [section])
     .then( (data) => {
       const header = 'ID   Name \n------------------\n'
       const rows = data
@@ -39,7 +39,7 @@ const itemsInSection = (section) => {
   }
 
 const cheapItems = () => {
-  return db.any('SELECT * FROM items WHERE price < 10.00 ORDER BY price')
+  return db.any('SELECT id, name, price FROM items WHERE price < 10.00 ORDER BY price')
     .then( (data) => {
       const header = 'ID   Name         Price \n------------------------------\n'
       const rows = data
@@ -59,21 +59,25 @@ const countItemsInSection = (section) => {
 const mostRecentOrders = () => {
   return db.any('SELECT id, order_date FROM orders ORDER BY id DESC LIMIT 10')
     .then( (data) =>{
-      return data
+      const header = 'ID   Order-date \n---------------------------------------------\n'
+      const rows = data
+        .map(order => formatSpaces(order.id.toString(), 2) + order.order_date)
+        .join('\n')
+      return header + rows
     })
 }
 
 const lastShopperName = () => {
   return db.one('SELECT shoppers.name FROM orders JOIN shoppers ON orders.shopper_id = shoppers.id ORDER BY orders.id DESC LIMIT 1')
     .then( (data) => {
-      return data
+      return data.name + " was the most recent shopper to make an order."
     })
 }
 
 const orderTotal = (id) => {
   return db.one('SELECT SUM(items.price) FROM items_ordered JOIN items ON items.id = items_ordered.item_id WHERE order_number = $1', [id])
     .then( (data) => {
-      return data
+      return "Order # " + id + " had a total price of $" + data.sum
     })
 }
 
