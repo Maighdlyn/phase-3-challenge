@@ -56,6 +56,27 @@ const countItemsInSection = (section) => {
     })
 }
 
+const mostRecentOrders = () => {
+  return db.any('SELECT id, order_date FROM orders ORDER BY id DESC LIMIT 10')
+    .then( (data) =>{
+      return data
+    })
+}
+
+const lastShopperName = () => {
+  return db.one('SELECT shoppers.name FROM orders JOIN shoppers ON orders.shopper_id = shoppers.id ORDER BY orders.id DESC LIMIT 1')
+    .then( (data) => {
+      return data
+    })
+}
+
+const orderTotal = (id) => {
+  return db.one('SELECT SUM(items.price) FROM items_ordered JOIN items ON items.id = items_ordered.item_id WHERE order_number = $1', [id])
+    .then( (data) => {
+      return data
+    })
+}
+
 const checkNodeQuery = (query, parameter) => {
   switch(query) {
     case 'allItems':
@@ -71,13 +92,13 @@ const checkNodeQuery = (query, parameter) => {
       return countItemsInSection(parameter)
       break
     case 'mostRecentOrders' :
-      console.log("Recent orders")
+      return mostRecentOrders()
       break
     case 'lastShopperName' :
-      console.log("last shopper")
+      return lastShopperName()
       break
     case 'orderTotal' :
-      console.log("total for id " + parameter)
+      return orderTotal(parameter)
       break
   }
 }

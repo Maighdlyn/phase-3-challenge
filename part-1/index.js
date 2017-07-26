@@ -1,9 +1,8 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 
-app.get('/', (req, res) => {
-  res.send('hello')
-})
+app.use(bodyParser.json())
 
 app.get('/api/supported-operations', (req, res) => {
   const supportedOperations = {
@@ -21,8 +20,25 @@ app.get('/api/square?:number', (req, res) => {
   res.json(response)
 })
 
-app.get('/api/compute', (req, res) => {
-  res.send('compute')
+app.post('/api/compute', (req, res) => {
+  const operator = req.body.operator
+  const operands = req.body.operands
+
+  if(operator === "+"){
+    res.send({result: operands[0] + operands[1]})
+  }
+  if(operator === "-"){
+    res.send({result: operands[0] - operands[1]})
+  }
+  if(operator === "*"){
+    res.send({result: operands[0] * operands[1]})
+  }
+  if(operator === "/"){
+    res.send({result: (operands[0] / operands[1]).toFixed(2)})
+  }
+  else {
+    res.status(404).send({error: "invalid operator '" + operator + "'. Valid operators are /, +, -, *"})
+  }
 })
 
 const port = 3000

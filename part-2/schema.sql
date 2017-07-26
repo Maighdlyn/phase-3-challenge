@@ -3,9 +3,6 @@ CREATE DATABASE grocery_store;
 
 \c grocery_store
 
-DROP TABLE IF EXISTS items;
-DROP TABLE IF EXISTS orders;
-
 CREATE TABLE items(
   id SERIAL PRIMARY KEY,
   name TEXT,
@@ -13,7 +10,20 @@ CREATE TABLE items(
   section TEXT
 );
 
+CREATE TABLE shoppers(
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(150),
+  email VARCHAR(150) NOT NULL UNIQUE
+);
+
 CREATE TABLE orders(
   id SERIAL PRIMARY KEY,
-  customer_name TEXT
+  shopper_id INT NOT NULL,
+  order_date date DEFAULT CURRENT_DATE
+);
+
+CREATE TABLE items_ordered(
+  id SERIAL PRIMARY KEY,
+  order_number INT,
+  item_id INT
 );
